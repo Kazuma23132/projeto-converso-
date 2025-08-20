@@ -1,0 +1,11 @@
+{
+    "title": "Conversor de Centímetros",
+    "inputLabel": "Digite o valor em centímetros:",
+    "convertToMillimeters": "Converter para Milímetros",
+    "convertToInches": "Converter para Polegadas",
+    "conversionResults": "Resultados da Conversão:",
+    "calculationHistory": "Histórico de Cálculos:",
+    "alertInvalidNumber": "Por favor, insira um número válido",
+    "conversionMessage": "{cm} cm é igual a {mm} mm",
+    "conversionMessageInches": "{cm} cm é igual a {inches} polegadas (em {date})"
+}
