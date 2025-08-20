@@ -1,0 +1,12 @@
+[
+    {
+        "inputValue": 10,
+        "convertedValue": 100,
+        "conversionType": "centimeters to millimeters"
+    },
+    {
+        "inputValue": 10,
+        "convertedValue": 3.93701,
+        "conversionType": "centimeters to inches"
+    }
+]
