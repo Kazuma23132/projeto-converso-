@@ -1,10 +1,13 @@
 let history = [];
-let currentLanguage = 'en'; // Default language
+let currentLanguage = 'en';
+let langStrings = {};
 
 // Load language strings from JSON files
 async function loadLanguage() {
     const response = await fetch(`lang/${currentLanguage}.json`);
-    return response.json();
+    langStrings = await response.json();
+    updateTexts();
+    updateHistoryDisplay();
 }
 
 // Function to convert centimeters to millimeters
@@ -17,65 +20,63 @@ function cmToInches(cm) {
     return cm / 2.54;
 }
 
+// Function to update text elements on the page
+function updateTexts() {
+    document.getElementById('title').textContent = langStrings.title;
+    document.getElementById('inputLabel').textContent = langStrings.inputLabel;
+    document.getElementById('convertButton').textContent = langStrings.convertToMillimeters + " / " + langStrings.convertToInches;
+    document.getElementById('resultTitle').textContent = langStrings.conversionResults;
+    document.getElementById('historyTitle').textContent = langStrings.calculationHistory;
+    document.querySelector('label[for="languageSelect"]').textContent = currentLanguage === 'en' ? "Select Language:" : "Selecione o idioma:";
+}
+
 // Function to display results
-async function displayResults(cm) {
+function displayResults(cm) {
     const mm = cmToMm(cm);
     const inches = cmToInches(cm);
-    const langStrings = await loadLanguage();
-    
-    const resultDiv = document.getElementById('result');
-    resultDiv.innerHTML = `
-        <p>${cm} ${langStrings.cm} ${langStrings.isEqualTo} ${mm} ${langStrings.mm}</p>
-        <p>${cm} ${langStrings.cm} ${langStrings.isEqualTo} ${inches.toFixed(2)} ${langStrings.inches}</p>
+    const date = new Date().toLocaleString();
+
+    const resultsDiv = document.getElementById('results');
+    resultsDiv.innerHTML = `
+        <p>${langStrings.conversionMessage.replace('{cm}', cm).replace('{mm}', mm)}</p>
+        <p>${langStrings.conversionMessageInches.replace('{cm}', cm).replace('{inches}', inches.toFixed(2)).replace('{date}', date)}</p>
     `;
-    addToHistory(cm, mm, inches);
+    addToHistory(cm, mm, inches, date);
 }
 
 // Function to add calculation to history
-function addToHistory(cm, mm, inches) {
-    const conversion = {
-        cm: cm,
-        mm: mm,
-        inches: inches.toFixed(2),
-        date: new Date().toLocaleString()
-    };
-    history.push(conversion);
+function addToHistory(cm, mm, inches, date) {
+    history.push({ cm, mm, inches: inches.toFixed(2), date });
     updateHistoryDisplay();
 }
 
 // Function to update history display
 function updateHistoryDisplay() {
-    const historyDiv = document.getElementById('historyList');
-    const langStrings = loadLanguage();
+    const historyDiv = document.getElementById('history');
+    if (!langStrings.calculationHistory) return;
     historyDiv.innerHTML = history.map(item => `
-        <li>${item.cm} ${langStrings.cm} = ${item.mm} ${langStrings.mm}, ${item.inches} ${langStrings.inches} (${langStrings.on} ${item.date})</li>
+        <div class="history-item">
+            <p>${langStrings.conversionMessage.replace('{cm}', item.cm).replace('{mm}', item.mm)}</p>
+            <p>${langStrings.conversionMessageInches.replace('{cm}', item.cm).replace('{inches}', item.inches).replace('{date}', item.date)}</p>
+        </div>
     `).join('');
 }
 
-// Event listeners for conversion buttons
-document.getElementById('toMillimeters').addEventListener('click', () => {
+// Event listener for conversion button
+document.getElementById('convertButton').addEventListener('click', () => {
     const cmInput = parseFloat(document.getElementById('cmInput').value);
-    if (!isNaN(cmInput)) {
+    if (!isNaN(cmInput) && cmInput !== "") {
         displayResults(cmInput);
     } else {
-        alert('Please enter a valid number');
-    }
-});
-
-document.getElementById('toInches').addEventListener('click', () => {
-    const cmInput = parseFloat(document.getElementById('cmInput').value);
-    if (!isNaN(cmInput)) {
-        displayResults(cmInput);
-    } else {
-        alert('Please enter a valid number');
+        alert(langStrings.invalidInput || langStrings.alertInvalidNumber);
     }
 });
 
 // Language selection
 document.getElementById('languageSelect').addEventListener('change', (event) => {
     currentLanguage = event.target.value;
-    updateHistoryDisplay(); // Update history display to reflect the selected language
+    loadLanguage();
 });
 
 // Initial load of language strings
-loadLanguage();
+window.onload = loadLanguage;
