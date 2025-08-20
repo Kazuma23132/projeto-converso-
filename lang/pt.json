@@ -1,6 +1,6 @@
 {
     "title": "Conversor de Centímetros",
-    "inputLabel": "Digite o valor em centímetros:",
+    "inputLabel": "Digite o valor em centímetros, não esqueça de colocar a virgula:",
     "convertToMillimeters": "Converter para Milímetros",
     "convertToInches": "Converter para Polegadas",
     "conversionResults": "Resultados da Conversão:",
