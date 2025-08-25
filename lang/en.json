@@ -1,11 +1,8 @@
 {
-    "title": "Centimeter Converter",
-    "inputLabel": "Enter value in centimeters:",
-    "convertToMillimeters": "Convert to Millimeters",
-    "convertToInches": "Convert to Inches",
-    "conversionResults": "Conversion Results:",
-    "calculationHistory": "Calculation History:",
-    "invalidInput": "Please enter a valid number",
-    "conversionMessage": "{cm} cm is equal to {mm} mm",
-    "conversionMessageInches": "{cm} cm is equal to {inches} inches (on {date})"
+    "title": "Universal Unit Converter",
+    "inputLabel": "Enter value:",
+    "conversionResults": "Result:",
+    "calculationHistory": "History:",
+    "invalidInput": "Please enter a valid number.",
+    "conversionMessage": "{value} {from} = {result} {to} ({date})"
 }
