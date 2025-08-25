@@ -165,6 +165,34 @@ document.getElementById('exportButton').addEventListener('click', () => {
     URL.revokeObjectURL(url);
 });
 
+// Export history as PDF
+document.getElementById('exportPDFButton').addEventListener('click', () => {
+    if (history.length === 0) return;
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFont('Poppins', 'normal');
+    doc.setFontSize(16);
+    doc.text(langStrings.title, 10, 15);
+
+    doc.setFontSize(12);
+    doc.text('History:', 10, 25);
+
+    let y = 35;
+    history.forEach((item, idx) => {
+        const line = `${item.value} ${unitNames[item.from]} = ${item.result} ${unitNames[item.to]} (${item.date})`;
+        doc.text(line, 10, y);
+        y += 10;
+        // Avoid writing off the page
+        if (y > 280) {
+            doc.addPage();
+            y = 20;
+        }
+    });
+
+    doc.save('conversion_history.pdf');
+});
+
 // Conversion button
 document.getElementById('convertButton').addEventListener('click', () => {
     const value = parseFloat(document.getElementById('inputValue').value);
