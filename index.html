@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Centimeter Converter</title>
+    <title>Universal Unit Converter</title>
+    <!-- Google Fonts: Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
+    <button id="darkModeToggle" title="Toggle Dark Mode">🌙</button>
     <div class="container">
-        <h1 id="title">Centimeter Converter</h1>
+        <h1 id="title">Universal Unit Converter</h1>
         <div class="language-selection">
             <label for="languageSelect">Select Language:</label>
             <select id="languageSelect">
@@ -17,16 +20,45 @@
             </select>
         </div>
         <div class="conversion-section">
-            <label for="cmInput" id="inputLabel">Enter the value in centimeters, don't forget to include the comma.:</label>
-            <input type="number" id="cmInput" placeholder="Centimeters">
-            <button id="convertButton">Convert</button>
+            <div class="selectors">
+                <label for="inputUnit">From:</label>
+                <select id="inputUnit">
+                    <option value="cm">Centimeters (cm)</option>
+                    <option value="mm">Millimeters (mm)</option>
+                    <option value="m">Meters (m)</option>
+                    <option value="km">Kilometers (km)</option>
+                    <option value="in">Inches (in)</option>
+                    <option value="ft">Feet (ft)</option>
+                    <option value="yd">Yards (yd)</option>
+                    <option value="mi">Miles (mi)</option>
+                </select>
+                <label for="outputUnit">To:</label>
+                <select id="outputUnit">
+                    <option value="mm">Millimeters (mm)</option>
+                    <option value="cm">Centimeters (cm)</option>
+                    <option value="m">Meters (m)</option>
+                    <option value="km">Kilometers (km)</option>
+                    <option value="in">Inches (in)</option>
+                    <option value="ft">Feet (ft)</option>
+                    <option value="yd">Yards (yd)</option>
+                    <option value="mi">Miles (mi)</option>
+                </select>
+            </div>
+            <label for="inputValue" id="inputLabel">Enter value:</label>
+            <input type="number" id="inputValue" placeholder="Value" step="any">
+            <div class="conversion-buttons">
+                <button id="convertButton">Convert</button>
+                <button id="clearButton" title="Clear History">🧹 Clear History</button>
+                <button id="exportButton" title="Export CSV">📄 Export CSV</button>
+            </div>
         </div>
         <div class="result-section">
-            <h2 id="resultTitle">Conversion Results:</h2>
-            <p id="results"></p>
+            <h2 id="resultTitle">Result:</h2>
+            <div id="results" class="result-card"></div>
+            <div id="visualBar" class="visual-bar"></div>
         </div>
         <div class="history-section">
-            <h2 id="historyTitle">Calculation History:</h2>
+            <h2 id="historyTitle">History:</h2>
             <div id="history"></div>
         </div>
     </div>
