@@ -130,7 +130,7 @@ function updateHistoryDisplay() {
     const historyDiv = document.getElementById('history');
     if (!langStrings.calculationHistory) return;
     if (history.length === 0) {
-        historyDiv.innerHTML = `<em>No history yet.</em>`;
+        historyDiv.innerHTML = `<em>${langStrings.noHistory || "No history yet."}</em>`;
         return;
     }
     historyDiv.innerHTML = history.map(item => `
@@ -198,7 +198,7 @@ document.getElementById('convertButton').addEventListener('click', () => {
     const value = parseFloat(document.getElementById('inputValue').value);
     const from = document.getElementById('inputUnit').value;
     const to = document.getElementById('outputUnit').value;
-    if (isNaN(value) || value === "") {
+    if (isNaN(value)) {
         alert(langStrings.invalidInput);
         return;
     }
